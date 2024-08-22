@@ -1,0 +1,148 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="pizza.css">
+<title>Formulário do Fornecedor</title>
+</head>
+<body>
+    <h1>Formulário do Fornecedor:</h1>
+    <form id="supplierForm" onsubmit="return validarFormulario()">
+        <label for="name">Nome:</label><br>
+        <input type="text" id="name" placeholder="Qualquer"><br>
+        <label for="company">CNPJ:</label><br>
+        <input type="text" id="company" placeholder="XX.XXX.XXX/0001-XX" pattern="\[0-9]{2}.[0-9]{3}.[0-9]{3}[/0001]-[0-9]{2}"><br>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" placeholder="exemplo@gmail.com"><br>
+        <label for="phone">Telefone:</label><br>
+        <input type="tel" id="phone" placeholder="(11) 12345-6789" pattern="\([0-9]{2}\) [0-9]{5}-[0-9]{4}"><br>
+        <label for="address">Endereço:</label><br>
+        <input type="text" id="address" placeholder="Qualquer"><br>
+        <label for="city">Cidade:</label><br>
+        <input type="text" id="city" placeholder="Qualquer"><br>
+        <label for="state">Estado:</label><br>
+        <input type="text" id="state" placeholder="Qualquer"><br>
+        <label for="zip">CEP:</label><br>
+        <input type="text" id="cep" placeholder="12345-678" pattern="[0-9]{5}-[0-9]{3}"><br>
+
+        <h2>Produtos:</h2>
+        <hr>
+        <p>Selecione os ingredientes:</p>
+        <hr>
+        <ul>
+            <input type="checkbox" id="ingredient1" name="ingredient1" value="Queijo"> Queijo<br>
+            <input type="checkbox" id="ingredient2" name="ingredient2" value="Pepperoni"> Pepperoni<br>
+            <input type="checkbox" id="ingredient3" name="ingredient3" value="Mussarela"> Mussarela<br>
+            <input type="checkbox" id="ingredient4" name="ingredient4" value="Bacon"> Bacon <br>
+            <input type="checkbox" id="ingredient5" name="ingredient5" value="Cebola"> Cebola <br>
+            <input type="checkbox" id="ingredient6" name="ingredient6" value="Champignon"> Champignon<br>
+            <input type="checkbox" id="ingredient7" name="ingredient7" value="Oregano"> Orégano <br>
+        </ul>
+        <hr>
+        <p>Selecione as Bebidas:</p>
+        <hr>
+        <ul>
+            <input type="checkbox" id="Bebida1" name="Bebida1" value="Guaraná"> Guaraná <br>
+            <input type="checkbox" id="Bebida2" name="Bebida2" value="Coca-Cola"> Cola-Cola <br>
+            <input type="checkbox" id="Bebida3" name="Bebida3" value="Dolly"> Dolly <br>
+            <input type="checkbox" id="Bebida4" name="Bebida4" value="Brahma"> Brahma <br>
+            <input type="checkbox" id="Bebida5" name="Bebida5" value="Nenhuma"> Nenhuma <br>
+        </ul>
+        <input class="Botao" type="submit" value="Cadastrar">
+    </form>
+    <footer>
+        <hr>
+        Copyright &copy;  pizza hub 2024
+    </footer>
+
+    <script>
+    function validarFormulario() {
+        var name = document.getElementById('name').value.trim();
+        var company = document.getElementById('company').value.trim();
+        var email = document.getElementById('email').value.trim();
+        var address = document.getElementById('address').value.trim();
+        var city = document.getElementById('city').value.trim();
+        var state = document.getElementById('state').value.trim();
+        var phone = document.getElementById('phone').value.trim();
+        var cep = document.getElementById('cep').value.trim();
+
+        var camposValidos = true;
+
+        if (name === '') {
+            document.getElementById('name').classList.add('error');
+            camposValidos = false;
+        } else {
+            document.getElementById('name').classList.remove('error');
+        }
+
+        var companyRegex = /^\d{2}\.\d{3}\.\d{3}\/0001-\d{2}$/;
+        var camposValidos = true;
+        if (!companyRegex.test(company)) {
+        document.getElementById('company').classList.add('error');
+        camposValidos = false;
+        } else {
+        document.getElementById('company').classList.remove('error');
+        }
+
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+        document.getElementById('email').classList.add('error');
+        camposValidos = false;
+        } else {
+        document.getElementById('email').classList.remove('error');
+        }
+
+        var telefoneRegex = /^\([0-9]{2}\) [0-9]{5}-[0-9]{4}$/;
+        if (!telefoneRegex.test(phone)) {
+            document.getElementById('phone').classList.add('error');
+            camposValidos = false;
+        } else {
+            document.getElementById('phone').classList.remove('error');
+        }
+
+        if (address === '') {
+            document.getElementById('address').classList.add('error');
+            camposValidos = false;
+        } else {
+            document.getElementById('address').classList.remove('error');
+        }
+
+        if (city === '') {
+            document.getElementById('city').classList.add('error');
+            camposValidos = false;
+        } else {
+            document.getElementById('city').classList.remove('error');
+        }
+
+        if (state === '') {
+            document.getElementById('state').classList.add('error');
+            camposValidos = false;
+        } else {
+            document.getElementById('state').classList.remove('error');
+        }
+
+        var cepRegex = /^[0-9]{5}-[0-9]{3}$/;
+        if (!cepRegex.test(cep)) {
+            document.getElementById('cep').classList.add('error');
+            camposValidos = false;
+        } else {
+            document.getElementById('cep').classList.remove('error');
+        }
+
+        if (!camposValidos) {
+            alert('Por favor, preencha todos os campos corretamente.');
+            return false;
+        }
+        
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+        if (checkboxes.length === 0) {
+            alert('Selecione pelo menos um ingrediente!');
+            return false;
+        }
+        
+        alert('Cadastro enviado!');
+        return true;
+    }
+    </script>
+</body>
+</html>
